@@ -7,6 +7,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Function: Calculate h-Index
 def Hindex(L):
     L = sorted(L,reverse=True)
     H_val=0
@@ -14,12 +15,12 @@ def Hindex(L):
         H_val=H_val+1
     return H_val
 
-# Part A Output
+# Part A Input/Output
 L = [2,7,1,3,11,1]
 H_val = Hindex(L)
 print H_val
 
-# Part B Output
+# Part B Input/Output
 L = []
 H_arr = []
 for P in range(0,100,1):
