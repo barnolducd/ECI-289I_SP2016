@@ -1,6 +1,6 @@
 # Brad Arnold
 # ECI-289I-001, Spring 2016
-# Homework 1.2 (Gradient Descent)
+# Homework 1.1 (Basic Programming Assignment)
 # -------------------------------
 
 from __future__ import division
