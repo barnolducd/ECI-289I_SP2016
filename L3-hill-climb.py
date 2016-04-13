@@ -12,7 +12,7 @@ def peaks(x):
   a = 3*(1-x[0])**2*np.exp(-(x[0]**2) - (x[1]+1)**2)
   b = 10*(x[0]/5 - x[0]**3 - x[1]**5)*np.exp(-x[0]**2-x[1]**2)
   c = (1/3)*np.exp(-(x[0]+1)**2 - x[1]**2)
-  return a - b - c + 6.551 # add this so objective is always positive
+  return a - b - c + 6.551
 
 ub = 3.0
 lb = -3.0
@@ -34,7 +34,7 @@ for seed in range(num_seeds):
   bestf = peaks(x)
 
   for i in range(max_NFE):
-    sample_rand = np.random.uniform(0,10,1) # Random Value between 0 and 10.
+    sample_rand = np.random.randint(1,10) # Random Value between 1 and 10.
     if sample_rand <= (prob*10): # If Random Value Less Than/Equal To Probability Defined
         # Sample Locally from Gaussian Distribution
         trial_x = np.random.normal(m,s,d)
