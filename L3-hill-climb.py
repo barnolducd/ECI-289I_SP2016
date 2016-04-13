@@ -1,7 +1,7 @@
 # Brad Arnold
 # ECI-289I-001, Spring 2016
-# Homework 1.2 (Gradient Descent)
-# -------------------------------
+# Homework 2.1 (Exploration vs. Exploitation)
+# -------------------------------------------
 
 from __future__ import division
 import numpy as np 
@@ -46,13 +46,10 @@ for seed in range(num_seeds):
     
     ft[seed,i] = bestf
 
-  # for each trial print the result (but the traces are saved in ft)
   print x
   print bestf
 
-
-
-# add a line for "enumeration"
+# Plot Enumeration Line
 enumy = np.arange(2.0,-3.0,-1.0)
 enumx = (10**(-enumy)*(ub-lb))**d
 
