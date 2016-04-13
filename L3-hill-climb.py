@@ -1,39 +1,45 @@
+# Brad Arnold
+# ECI-289I-001, Spring 2016
+# Homework 1.2 (Gradient Descent)
+# -------------------------------
+
 from __future__ import division
 import numpy as np 
 import matplotlib.pyplot as plt
 
-# function to optimize
-# assume input x is a numpy array, not a list
-def ackley(x):
-  a = 20
-  b = 0.2
-  c = 2*np.pi
-  d = x.size
-  term1 = -a*np.exp(-b*np.sqrt((x**2).sum()/d))
-  term2 = np.exp(np.cos(c*x).sum()/d)
-  return (term1 - term2 + a + np.exp(1))
+# Define MatLab "Peaks" Function
+def peaks(x):
+  a = 3*(1-x[0])**2*np.exp(-(x[0]**2) - (x[1]+1)**2)
+  b = 10*(x[0]/5 - x[0]**3 - x[1]**5)*np.exp(-x[0]**2-x[1]**2)
+  c = (1/3)*np.exp(-(x[0]+1)**2 - x[1]**2)
+  return a - b - c + 6.551 # add this so objective is always positive
 
-ub = 32.768
-lb = -32.768
+ub = 3.0
+lb = -3.0
 
-d = 2 # dimension of decision variable space
-s = 0.5 # stdev of normal noise (if this is too big, it's just random search!)
-num_seeds = 10
-max_NFE = 200000
+d = 2 # Dimension - Decision Variable Space
+s = 0.1 # Standard Deviation
+prob = 0.3 # Probability
+num_seeds = 5 # Number of Random Seeds
+max_NFE = 100000
 ft = np.zeros((num_seeds, max_NFE))
 
-# hill climbing
+# Hill Climbing Algorithm
 for seed in range(num_seeds):
   np.random.seed(seed)
 
-  # random initial starting point
   x = np.random.uniform(lb, ub, d)
-  bestf = ackley(x)
+  bestf = peaks(x)
 
   for i in range(max_NFE):
-    trial_x = x + np.random.normal(0,s,d)
-    trial_f = ackley(trial_x)
-    
+    sample_rand = np.random.uniform(0,10,1) # Random Value between 0 and 10.
+    if sample_rand <= (prob*10): # If Random Value Less Than/Equal To Probability Defined
+        # Sample Locally from Gaussian Distribution
+        trial_x = x + np.random.normal(0,s,d)
+    else:
+        # Sample Uniformly from Full Domain
+        trial_x = x + np.random.uniform(lb, ub, d)
+    trial_f = peaks(trial_x)
     if trial_f < bestf:
       x = trial_x
       bestf = trial_f
