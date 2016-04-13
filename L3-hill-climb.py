@@ -18,10 +18,12 @@ ub = 3.0
 lb = -3.0
 
 d = 2 # Dimension - Decision Variable Space
+m = 0 # Mean
 s = 0.1 # Standard Deviation
-prob = 0.3 # Probability
+prob = 0 # Probability
 num_seeds = 5 # Number of Random Seeds
 max_NFE = 100000
+xt = np.zeros((2, max_NFE))
 ft = np.zeros((num_seeds, max_NFE))
 
 # Hill Climbing Algorithm
@@ -35,24 +37,36 @@ for seed in range(num_seeds):
     sample_rand = np.random.uniform(0,10,1) # Random Value between 0 and 10.
     if sample_rand <= (prob*10): # If Random Value Less Than/Equal To Probability Defined
         # Sample Locally from Gaussian Distribution
-        trial_x = x + np.random.normal(0,s,d)
+        trial_x = np.random.normal(m,s,d)
     else:
         # Sample Uniformly from Full Domain
-        trial_x = x + np.random.uniform(lb, ub, d)
+        trial_x = np.random.uniform(lb, ub, d)
     trial_f = peaks(trial_x)
     if trial_f < bestf:
       x = trial_x
       bestf = trial_f
     
     ft[seed,i] = bestf
+    xt[:,i] = x
 
   print x
   print bestf
 
-# Plot Enumeration Line
+# Add Enumeration Line
 enumy = np.arange(2.0,-3.0,-1.0)
 enumx = (10**(-enumy)*(ub-lb))**d
 
+plt.subplot(1,2,1)
+xx = np.arange(lb,ub,0.01)
+X1,X2 = np.meshgrid(xx, xx)
+Z = peaks([X1,X2])
+plt.contourf(X1,X2,Z,50,cmap=plt.cm.Blues_r)
+plt.plot(xt[0,:], xt[1,:], color='k', linewidth=2)
+plt.xlabel('X1')
+plt.ylabel('X2')
+plt.colorbar()
+
+plt.subplot(1,2,2)
 plt.loglog(ft.T, color='steelblue', linewidth=1)
 plt.loglog(enumx,10**enumy, color='indianred', linewidth=2)
 plt.xlabel('Iterations')
