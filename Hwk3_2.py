@@ -6,36 +6,34 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# rosenbrock function
-# from http://docs.scipy.org/doc/scipy-0.14.0/reference/tutorial/optimize.html
+# Define Rosenbrock Function
 def rosenbrock(x):
   return sum(100.0*(x[1:]-x[:-1]**2.0)**2.0 + (1-x[:-1])**2.0)
 
 ub = 3.0
 lb = -3.0
 
-d = 2 # dimension of decision variable space
+d = 2 # Dimension of Decision Variable Space
 num_seeds = 10
 
-popsize = 50
-CR = 0.9 # crossover probability
-F = 0.8 # between 0 and 2, vector step
-max_NFE = 10000 # should be a multiple
+popsize = 10
+CR = 0.9 # Crossover Probability
+F = 0.9
+max_NFE = 10000
 ft = np.zeros((num_seeds, max_NFE/popsize))
 
-# differential evolution (a simple version)
+# Differential Evolution (Simple Version)
 for seed in range(num_seeds):
   np.random.seed(seed)
 
-  # random initial population (popsize x d matrix)
+  # Random Initial Population (popsize x d matrix)
   P = np.random.uniform(lb, ub, (popsize,d))
-  f = np.zeros(popsize) # we'll evaluate them later
+  f = np.zeros(popsize)
   nfe = 0
   f_best, x_best = None, None
 
   while nfe < max_NFE:
 
-    # for each member of the population ..
     for i,x in enumerate(P):
 
       # pick two random population members
@@ -69,7 +67,7 @@ for seed in range(num_seeds):
   print x_best
   print f_best
 
-# add a line for "enumeration"
+# Define Enumeration Line
 enumy = np.arange(1.0,-4.0,-1.0)
 enumx = (10**(-enumy)*(ub-lb))**d
 
